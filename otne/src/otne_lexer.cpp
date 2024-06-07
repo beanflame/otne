@@ -198,14 +198,18 @@ wprintf(L"%2d '%c'\n", m_idx, scan_ch);
         { L"{",     t_left_curly_brackets },
         { L"}",    t_right_curly_brackets },
 
+     
+
+    };
+    
+    std::map<std::wstring, tokenType> key_word_list = 
+    {
         { L"func",     t_func },
         { L"string", t_string },
         { L"int",       t_int },
         { L"var",       t_var },
-
     };
-
-
+    
 
 
 
