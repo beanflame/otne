@@ -16,21 +16,6 @@ using namespace std;
 #include <map>
 
 
-/*
-bool isRussian(i18nChar ch) {
-    if ((ch >= L'a' && ch <= L'я') || (ch >= L'A' && ch <= L'Я')) { return true; }
-    else { return false; }
-}
-bool isChinese(i18nChar ch) {
-    if ((ch >= L'一' && ch <= L'龥')) { return true; }
-    else { return false; }
-}
-bool isText(i18nChar ch) {
-    if (isEnglish(ch) || isChinese(ch)) { return true; }
-    else { return false; }
-}
-*/
-
 
 bool isDigit(i18nChar ch) {
     if (ch >= L'0' && ch <= L'9') { return true; }

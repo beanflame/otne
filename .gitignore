@@ -37,3 +37,9 @@ out/
 .kde
 *.kde
 build_*
+
+
+# otne
+
+otne.*
+
