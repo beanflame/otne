@@ -184,7 +184,6 @@ wprintf(L"%2d '%c'\n", m_idx, scan_ch);
 
     std::map<std::wstring, tokenType> lexer_operator_list =
     {
-
         { L"+",      t_add },
         { L"-",      t_sub },
         { L"*",      t_mul },
@@ -197,15 +196,7 @@ wprintf(L"%2d '%c'\n", m_idx, scan_ch);
         { L"]",   t_right_square_brackets },
         { L"{",     t_left_curly_brackets },
         { L"}",    t_right_curly_brackets },
-
-     
-
     };
-
-
-    
-
-
 
     std::map<std::wstring, tokenType> key_word_list = 
     {
@@ -449,20 +440,7 @@ void lexer(i18nString Text) {
 
 
 
-/*
-func main () {
-}
 
-#include <stdio.h>
-
-int main()
-{
-    // 我的第一个 C 程序
-printf("Hello, World! \n");
-
-return 0;
-}
-*/
 
 
 
