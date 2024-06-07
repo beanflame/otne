@@ -141,7 +141,7 @@ i18nString scan_identifier() {
 
 
 
-void scan_Annotation() {
+void scan_annotation() {
     next();
     if (next_ch() == '/') {
         next();
@@ -245,7 +245,7 @@ void lexer(i18nString Text) {
         }
         else if (scan_ch == L'/')
         {
-            scan_Annotation();
+            scan_annotation();
         }
         else if (isDigit(scan_ch))
         {
