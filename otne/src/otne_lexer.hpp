@@ -36,14 +36,25 @@ enum tokenType {
     t_right_curly_brackets,   // }
 
 
-
-
-
+    t_module,
+    t_class,
+    t_static,
     t_func,
     t_int,
     t_string,
     t_var,
-    
+    t_return,
+    t_bool,
+    t_true,
+    t_false,
+    t_if,
+    t_elif,
+    t_else,
+    t_for,
+    t_while,
+    t_break,
+
+
 };
 
 

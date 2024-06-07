@@ -201,13 +201,32 @@ wprintf(L"%2d '%c'\n", m_idx, scan_ch);
      
 
     };
+
+
     
+
+
+
     std::map<std::wstring, tokenType> key_word_list = 
     {
-        { L"func",     t_func },
-        { L"string", t_string },
-        { L"int",       t_int },
-        { L"var",       t_var },
+        { L"module",    t_module },       
+        { L"static",    t_static },       
+        { L"class",      t_class },   
+        { L"func",        t_func },   
+        { L"int",          t_int },   
+        { L"string",    t_string },     
+        { L"var",          t_var },  
+        { L"return",    t_return },       
+        { L"bool",        t_bool },   
+        { L"true",        t_true },   
+        { L"false",      t_false },       
+        { L"null",        t_null },   
+        { L"if",            t_if },   
+        { L"elif",        t_elif },   
+        { L"else",        t_else },   
+        { L"for",          t_for },   
+        { L"while",      t_while },       
+        { L"break",      t_break },  
     };
     
 
