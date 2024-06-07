@@ -223,7 +223,6 @@ void lexer(i18nString Text) {
         {
             row++;
             // col = 1;
-            // next();
             next();
         }
         else if (scan_ch == L' ')
@@ -236,27 +235,22 @@ void lexer(i18nString Text) {
         }
         else if (isDigit(scan_ch))
         {
-            // wcout << "\""<< scan_ch << "\"" << L" isDigit " << L" m_idx: " << m_idx << endl;
             wcout << L"{ " << scan_ch << L" : integer" << L" }"<< endl;
             next();
         }
         else if (scan_ch == L'+' || scan_ch == L'-'|| scan_ch == L'*'|| scan_ch == L'/')
         {
             wcout << L"{ " << scan_ch << L" }"<< endl;
-            // wcout << "\""<< scan_ch << "\"" << L" 算法 " << L" m_idx: " << m_idx << endl;
             next();
         }
         else if (scan_ch == L'\"')
         {
-            
             wcout << L"{ " << scan_string() << L" : string" << L" }"<< endl;
             next();
-            //wcout << "\""<<  scan_string() << "\"" << L" scan_string " << L" m_idx: " << m_idx << endl;
         }
         else if (scan_ch == L'.')
         {
             wcout << L"{ " << scan_ch << L" }"<< endl;
-            //wcout << "\""<< scan_ch << "\"" << L" scan_. " << L" m_idx: " << m_idx << endl;
             next();
         }
         else if (scan_ch == L'<')
@@ -267,45 +261,34 @@ void lexer(i18nString Text) {
         else if (scan_ch == L'>')
         {
             wcout << L"{ " << scan_ch << L" }"<< endl;
-            //wcout << "\""<< scan_ch << "\"" << L" scan_func_> " << L" m_idx: " << m_idx << endl;
             next();
         }
         else if (scan_ch == L'=')
         {
-            // wcout << scan_ch  << endl;
             wcout << L"{ " << scan_ch << L" }"<< endl;
-            //wcout << "\""<< scan_ch << "\"" << L" scan_= " << L" m_idx: " << m_idx << endl;
             next();
         }
         else if (scan_ch == L',')
         {
             wcout << L"{ " << scan_ch << L" }"<< endl;
-            // wcout << L"semicolon: " << "\"" << scan_ch << "\"" << endl;
-            //wcout << "\""<< scan_ch << "\"" << L" scan_end " << L" m_idx: " << m_idx << endl;
             next();
         }
         else if (scan_ch == L';')
         {
-            // wcout << scan_ch  << endl;
             wcout << L"{ " << scan_ch << L" }"<< endl;
-            // wcout << L"semicolon: " << "\"" << scan_ch << "\"" << endl;
-            //wcout << "\""<< scan_ch << "\"" << L" scan_end " << L" m_idx: " << m_idx << endl;
             next();
         }
         else if (scan_ch == L'~')
         {
-            //wcout << "\""<< scan_ch << "\"" << L" scan_func_end " << L" m_idx: " << m_idx << endl;
             next();
         }
         else if (isAlpha(scan_ch) || scan_ch == L'_')
         {
             wcout << L"{ " << scan_identifier() << L" : identifier" << L" }"<< endl;
-            //wcout << "\""<< scan_identifier() << "\"" << L" scan_ID " << L" m_idx: " << m_idx << endl;
             next();
         }
         else if (scan_ch == L'(')
         {
-            // wcout << scan_ch  << endl;
             wcout << L"{ " << scan_ch << L" }"<< endl;
             next();
         }
