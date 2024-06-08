@@ -64,6 +64,9 @@ namespace otne
         token_type type;
         std::wstring value;
 
+
+
+
         token() {}
         token(token_type t, std::wstring v) : type(t), value(v) {}
     };
@@ -76,12 +79,14 @@ namespace otne
             std::wstring m_str;
             int m_idx;
 
+
+
         public:
             Lexer();
             ~Lexer();
 
         public:
-            Lexer(std::wstring str);// : m_str(str), m_idx(0) {}
+            Lexer(std::wstring str);
             
             // wchar_t Lexer::next_ch()
             wchar_t next_ch();

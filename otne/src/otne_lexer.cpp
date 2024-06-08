@@ -24,10 +24,12 @@ namespace otne
         else { return false; }
     }
 
-
     template<class T>
     int getLength(T& arr) { return sizeof(arr) / sizeof(arr[0]); }
 
+
+    // key_word_list
+    /*
     std::wstring KeyWord[] = {
         L"module",
         L"static", 
@@ -37,28 +39,82 @@ namespace otne
         L"bool", L"true", L"false", L"null", 
         L"if", L"elif", L"else", L"for", L"while", L"break" 
     };
+    */
 
 
+    std::map<std::wstring, token_type> lexer_operator_list =
+    {
+        { L"+",      t_add },
+        { L"-",      t_sub },
+        { L"*",      t_mul },
+        { L"/",      t_div },
+        { L"=",   t_assign },
 
-    int isKeyWord(std::wstring token) {
-        for (int i = 0; i < getLength(KeyWord); i++) {
-            if (token == KeyWord[i]) { 
-                return true; 
+        { L"(",     t_left_round_brackets },
+        { L")",    t_right_round_brackets },
+        { L"[",    t_left_square_brackets },
+        { L"]",   t_right_square_brackets },
+        { L"{",     t_left_curly_brackets },
+        { L"}",    t_right_curly_brackets },
+    };
+
+    std::map<std::wstring, token_type> key_word_list = 
+    {
+        { L"module",    t_module },       
+        { L"static",    t_static },       
+        { L"class",      t_class },   
+        { L"func",        t_func },   
+        { L"int",          t_int },   
+        { L"string",    t_string },     
+        { L"var",          t_var },  
+        { L"return",    t_return },       
+        { L"bool",        t_bool },   
+        { L"true",        t_true },   
+        { L"false",      t_false },       
+        { L"null",        t_null },   
+        { L"if",            t_if },   
+        { L"elif",        t_elif },   
+        { L"else",        t_else },   
+        { L"for",          t_for },   
+        { L"while",      t_while },       
+        { L"break",      t_break },  
+    };
+
+    /*
+    token Lexer::lexer_is_operate_type(wchar_t ch)
+    {
+        next();
+        std::string str;
+        str.push_back(ch);
+        for (auto [op_str, op_type] : lexer_operator_list)
+        {
+            if (op_str == str)
+            {
+                return token(op_type, str);
+            }
+        }
+        return token();
+    }
+    */
+    
+    int isKeyWord(std::wstring t)
+    {
+        for (auto [op_str, op_type] : lexer_operator_list)
+        {
+            if (op_str == t)
+            {
+                // return token(op_type, t);
+                return true;
             }
         }
         return false;
     }
-
-
-
-
+    
 
     int m_idx = 0;  // index表示指数
-
     // row表示行，col表示列，index表示指数
     int row = 1;
     int col = 1;
-
     std::wstring m_str = L"";
     std::wstring token = L"";
     wchar_t scan_ch;
@@ -144,48 +200,8 @@ namespace otne
     // printf("%2d '%.*s'\n", m_idx, scan_ch);
     wprintf(L"%2d '%c'\n", m_idx, scan_ch);
     */
+    // inline const static 
 
-
-
-        // inline const static 
-
-        std::map<std::wstring, token_type> lexer_operator_list =
-        {
-            { L"+",      t_add },
-            { L"-",      t_sub },
-            { L"*",      t_mul },
-            { L"/",      t_div },
-            { L"=",   t_assign },
-
-            { L"(",     t_left_round_brackets },
-            { L")",    t_right_round_brackets },
-            { L"[",    t_left_square_brackets },
-            { L"]",   t_right_square_brackets },
-            { L"{",     t_left_curly_brackets },
-            { L"}",    t_right_curly_brackets },
-        };
-
-        std::map<std::wstring, token_type> key_word_list = 
-        {
-            { L"module",    t_module },       
-            { L"static",    t_static },       
-            { L"class",      t_class },   
-            { L"func",        t_func },   
-            { L"int",          t_int },   
-            { L"string",    t_string },     
-            { L"var",          t_var },  
-            { L"return",    t_return },       
-            { L"bool",        t_bool },   
-            { L"true",        t_true },   
-            { L"false",      t_false },       
-            { L"null",        t_null },   
-            { L"if",            t_if },   
-            { L"elif",        t_elif },   
-            { L"else",        t_else },   
-            { L"for",          t_for },   
-            { L"while",      t_while },       
-            { L"break",      t_break },  
-        };
         
 
 
