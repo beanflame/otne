@@ -4,6 +4,7 @@
 #include <fstream>
 #include <codecvt>
 // #include "otne_utf8.hpp"
-
-std::wstring OtneReadFile(std::string filename);
-
+namespace otne
+{
+    std::wstring ReadFile(std::string filename);
+};

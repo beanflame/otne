@@ -1,25 +1,25 @@
+
+// otne Hello ~
+
 #include <iostream>
 #include <fstream>
 #include <codecvt>
+
+// #include "otne_utf8.hpp"
 #include "otne_file.hpp"
-#include "otne_utf8.hpp"
 #include "otne_lexer.hpp"
-
-
 
 int main(int argc, char *argv[])
 {
     setlocale(LC_ALL, "");          // Linux MinGW GCC MSVC
-    ios::sync_with_stdio(false);    // Linux gcc     
+    std::ios::sync_with_stdio(false);    // Linux gcc     
 
-    // i18nString source = OtneReadFile("main.otne");
-
-    std::wstring source = OtneReadFile("resources/code/HelloWorld.otne");
-    // i18nString source = OtneReadFile("resources/code/main.otne");
-    wcout << source << endl;
-    wcout << L"----------------------------------" << endl;
+    // std::wstring source = otne::ReadFile("main.otne");
+    std::wstring source = otne::ReadFile("resources/code/HelloWorld.otne");
+    // std::wstring source = otne::ReadFile("resources/code/main.otne");
+    std::wcout << source << std::endl;
+    std::wcout << L"----------------------------------" << std::endl;
     otne::Lexer lex(source);
-    // lexer(source);
     return 0;
 }
 
