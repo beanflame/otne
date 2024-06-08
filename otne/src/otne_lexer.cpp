@@ -98,13 +98,10 @@ namespace otne
 
 
     // std::wstring token = L"";
-    // wchar_t scan_ch;
-
-
-    // scan
 
     void Lexer::next() { 
         m_idx++;    // m_index
+        col++;
     }
 
     wchar_t Lexer::next_ch() {
@@ -192,11 +189,10 @@ namespace otne
         while (m_idx < str.length()) {
 
             scan_ch = str[m_idx];
-            int e = 0;
             if(scan_ch == L'\n')
             {
                 row++;
-                // col = 1;
+                col = 0;
                 next();
             }
             else if (scan_ch == L' ')
@@ -247,6 +243,11 @@ namespace otne
                 std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
                 next();
             }
+            else if (scan_ch == L':')
+            {
+                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
+                next();
+            }
             else if (scan_ch == L';')
             {
                 std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
@@ -293,6 +294,7 @@ namespace otne
             }
             else
             {
+                std::wcerr << row << L":" << col << L" " << scan_ch << L" Error: Invalid Character" << std::endl;
                 next();
             }
             
