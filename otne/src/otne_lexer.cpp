@@ -68,6 +68,15 @@ namespace otne
         { L"break",      t_break },  
     };
 
+    token_type qweqwe(const std::wstring& str) {
+        auto it = lexer_operator_list.find(str);
+        if (it != lexer_operator_list.end()) {
+            return it->second;
+        } else {
+            return t_null;
+        }
+    }
+
     /*
     token Lexer::lexer_is_operate_type(wchar_t ch)
     {
@@ -99,16 +108,13 @@ namespace otne
     }
 
 
-
-    // std::wstring token = L"";
-
-    void Lexer::next() { 
-        m_idx++;    // m_index
+    // ok
+    void Lexer::next() {
+        this->m_idx++;
     }
 
     wchar_t Lexer::next_ch() {
         if (m_idx >= m_str.length()) {
-            
             return '\0';
         }
         return m_str[m_idx];
@@ -125,6 +131,19 @@ namespace otne
             next();
         }
         next();
+        m_idx--;
+        return str;
+    }
+
+    std::wstring Lexer::scan_integer()
+    {
+        std::wstring str = L"";
+        while (
+            isDigit(next_ch())
+            ){
+            str += next_ch();
+            next();
+        }
         m_idx--;
         return str;
     }
@@ -183,8 +202,10 @@ namespace otne
     wprintf(L"%2d '%c'\n", m_idx, scan_ch);
     */
     // inline const static 
+    
 
-        
+
+            
 
     Lexer::Lexer(std::wstring str) {
         m_str = str;
@@ -199,13 +220,14 @@ namespace otne
             scan_ch = str[m_idx];
             if(scan_ch == L'\n')
             {
-                col=0;
-                row++;
-                next();
+                next(); 
+                this->col++; 
+                this->row=1;
             }
-            else if (scan_ch == L' ')
+            else if (scan_ch == L' ' || scan_ch == L'\t')
             {
                 next();
+                this->row++;
             }
             else if (scan_ch == L'/')
             {
@@ -213,7 +235,7 @@ namespace otne
             }
             else if (isDigit(scan_ch))
             {
-                std::wcout << L"{ " << scan_ch << L" : integer" << L" }"<< std::endl;
+                std::wcout << L"{ " << scan_integer() << L" : integer" << L" }"<< std::endl;
                 next();
             }
             else if (scan_ch == L'\"')
@@ -223,14 +245,25 @@ namespace otne
             }
             else if (isAlpha(scan_ch) || scan_ch == L'_')
             {
-                std::wcout << L"{ " << scan_identifier() << L" : identifier" << L" } " << row << L":" << col << std::endl;
+                std::wcout << L"{ " << scan_identifier() << L" : identifier" << L" } " << std::endl;
                 next();
             }
             else
             {
-                std::wstring estr_;
                 std::wstring str_;
                 str_.push_back(scan_ch);
+                auto it = lexer_operator_list.find(str_);
+                if (it != lexer_operator_list.end()) {
+                    // return it->second;
+                    std::wcout << L"{ " << str_ << L" } " << row << L":" << col << std::endl;
+                } else {
+                    // return t_null;
+                    std::wcerr << L"{ " << scan_ch << L" } " << row << L":" << col << L" " << L" Error: Invalid Character" << std::endl;
+                }
+
+                /*
+                std::wstring estr_;
+                
                 for (auto [op_str, op_type] : lexer_operator_list)
                 {
                     if(op_str == str_)
@@ -240,11 +273,12 @@ namespace otne
                 }
                 if (estr_ == str_)
                 {
-                    std::wcout << L"{ " << str_ << L" }"<< std::endl;
+                    std::wcout << L"{ " << str_ << L" } " << row << L":" << col << std::endl;
                 }else if (estr_ != str_)
                 {
                     std::wcerr << L"{ " << scan_ch << L" } " << row << L":" << col << L" " << L" Error: Invalid Character" << std::endl;
                 }
+                */
                 next();
             }
 
@@ -254,32 +288,12 @@ namespace otne
 
 
 
-            /*
-            
-            
-            
-          
-            
-            
-            else
-            {
-                
-                next();
-            }
-            
-            
-          
-            */
 
             
 
 
 
             /*
-
-
-            
-
             if (isAlpha(ch)) {
                 while (isAlpha(ch)) {
                     token += ch;

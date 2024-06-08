@@ -85,6 +85,9 @@ namespace otne
             Lexer();
             ~Lexer();
 
+
+           
+
         public:
             Lexer(std::wstring str);
             
