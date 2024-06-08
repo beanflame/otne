@@ -16,428 +16,405 @@ using namespace std;
 #include <map>
 
 
-
-bool isDigit(i18nChar ch) {
-    if (ch >= L'0' && ch <= L'9') { return true; }
-    else { return false; }
-}
-
-bool isAlpha(i18nChar ch) {
-    if ((ch >= L'a' && ch <= L'z') || (ch >= L'A' && ch <= L'Z')) { return true; }
-    else { return false; }
-}
-
-
-template<class T>
-int getLength(T& arr) { return sizeof(arr) / sizeof(arr[0]); }
-
-i18nString KeyWord[] = {
-    L"module",
-    L"static", 
-    L"class",
-    L"func", L"int", L"string", 
-    L"return", 
-    L"bool", L"true", L"false", L"null", 
-    L"if", L"elif", L"else", L"for", L"while", L"break" 
-};
-
-
-
-int isKeyWord(i18nString token) {
-    for (int i = 0; i < getLength(KeyWord); i++) {
-        if (token == KeyWord[i]) { 
-            return true; 
-        }
-    }
-    return false;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-int m_idx = 0;  // index表示指数
-
- // row表示行，col表示列，index表示指数
-int row = 1;
-int col = 1;
-
-i18nString m_str = L"";
-i18nString token = L"";
-i18nChar   scan_ch;
-
-
-// scan
-
-void next() { 
-    m_idx++;    // index
-}
-
-i18nChar next_ch() {
-    if (m_idx >= m_str.length()) {
-        return '\0';
-    }
-    return m_str[m_idx];
-}
-
-i18nString scan_string() {
-    i18nString str = L"";
-    next();
-    while (
-        next_ch() != L'\0' &&
-        next_ch() != L'\"'
-        ){
-        str += next_ch();
-        next();
-    }
-    next();
-    return str;
-}
-
-i18nString scan_identifier() {
-    i18nString str = L"";
-    while (
-        isAlpha(next_ch()) || 
-        next_ch() == L'_' || 
-        isDigit(next_ch()) 
-        ){
-        str += next_ch();
-        next();
-    }
-    m_idx--;
-    return str;
-}
-
-
-
-
-void scan_annotation() {
-    next();
-    if (next_ch() == '/') {
-        next();
-        // 跳过双斜线注释内容
-        while (next_ch() != '\0' && next_ch() != '\n') {
-            next();
-        }
-        // continue; // 继续解析下一个Token
-    }
-}
-
-
-
-
-// index
-// ch = Text[stlPos];
-// wcout << ch;
-// stlPos++;
-// 词法分析器 Lexer Token
-  
-/*
-int line = -1;
-if (row != line)
+namespace otne
 {
-printf("%4d ", row);
-line = row;
-}
-else
-{
-printf("   | ");
-}
-// printf("%2d '%.*s'\n", m_idx, scan_ch);
-// printf("%2d '%.*s'\n", m_idx, scan_ch);
-wprintf(L"%2d '%c'\n", m_idx, scan_ch);
-*/
+    Lexer::Lexer(){}
+    Lexer::~Lexer(){}
+    
+    bool isDigit(wchar_t ch) {
+        if (ch >= L'0' && ch <= L'9') { return true; }
+        else { return false; }
+    }
+
+    bool isAlpha(wchar_t ch) {
+        if ((ch >= L'a' && ch <= L'z') || (ch >= L'A' && ch <= L'Z')) { return true; }
+        else { return false; }
+    }
 
 
+    template<class T>
+    int getLength(T& arr) { return sizeof(arr) / sizeof(arr[0]); }
 
-    // inline const static 
-
-    std::map<std::wstring, tokenType> lexer_operator_list =
-    {
-        { L"+",      t_add },
-        { L"-",      t_sub },
-        { L"*",      t_mul },
-        { L"/",      t_div },
-        { L"=",   t_assign },
-        
-        { L"(",     t_left_round_brackets },
-        { L")",    t_right_round_brackets },
-        { L"[",    t_left_square_brackets },
-        { L"]",   t_right_square_brackets },
-        { L"{",     t_left_curly_brackets },
-        { L"}",    t_right_curly_brackets },
+    wstring KeyWord[] = {
+        L"module",
+        L"static", 
+        L"class",
+        L"func", L"int", L"string", 
+        L"return", 
+        L"bool", L"true", L"false", L"null", 
+        L"if", L"elif", L"else", L"for", L"while", L"break" 
     };
 
-    std::map<std::wstring, tokenType> key_word_list = 
+
+
+    int isKeyWord(wstring token) {
+        for (int i = 0; i < getLength(KeyWord); i++) {
+            if (token == KeyWord[i]) { 
+                return true; 
+            }
+        }
+        return false;
+    }
+
+
+
+
+
+    int m_idx = 0;  // index表示指数
+
+    // row表示行，col表示列，index表示指数
+    int row = 1;
+    int col = 1;
+
+    wstring m_str = L"";
+    wstring token = L"";
+    wchar_t scan_ch;
+
+
+    // scan
+
+    void Lexer::next() { 
+        m_idx++;    // index
+    }
+
+    wchar_t Lexer::next_ch() {
+        if (m_idx >= m_str.length()) {
+            return '\0';
+        }
+        return m_str[m_idx];
+    }
+
+    std::wstring Lexer::scan_string() {
+        std::wstring str = L"";
+        next();
+        while (
+            next_ch() != L'\0' &&
+            next_ch() != L'\"'
+            ){
+            str += next_ch();
+            next();
+        }
+        next();
+        return str;
+    }
+
+    std::wstring Lexer::scan_identifier() {
+        std::wstring str = L"";
+        while (
+            isAlpha(next_ch()) || 
+            next_ch() == L'_' || 
+            isDigit(next_ch()) 
+            ){
+            str += next_ch();
+            next();
+        }
+        m_idx--;
+        return str;
+    }
+
+
+
+
+    void Lexer::scan_annotation() {
+        next();
+        if (next_ch() == '/') {
+            next();
+            // 跳过双斜线注释内容
+            while (next_ch() != '\0' && next_ch() != '\n') {
+                next();
+            }
+            // continue; // 继续解析下一个Token
+        }
+    }
+
+
+
+
+    // index
+    // ch = Text[stlPos];
+    // wcout << ch;
+    // stlPos++;
+    // 词法分析器 Lexer Token
+    
+    /*
+    int line = -1;
+    if (row != line)
     {
-        { L"module",    t_module },       
-        { L"static",    t_static },       
-        { L"class",      t_class },   
-        { L"func",        t_func },   
-        { L"int",          t_int },   
-        { L"string",    t_string },     
-        { L"var",          t_var },  
-        { L"return",    t_return },       
-        { L"bool",        t_bool },   
-        { L"true",        t_true },   
-        { L"false",      t_false },       
-        { L"null",        t_null },   
-        { L"if",            t_if },   
-        { L"elif",        t_elif },   
-        { L"else",        t_else },   
-        { L"for",          t_for },   
-        { L"while",      t_while },       
-        { L"break",      t_break },  
-    };
-    
+    printf("%4d ", row);
+    line = row;
+    }
+    else
+    {
+    printf("   | ");
+    }
+    // printf("%2d '%.*s'\n", m_idx, scan_ch);
+    // printf("%2d '%.*s'\n", m_idx, scan_ch);
+    wprintf(L"%2d '%c'\n", m_idx, scan_ch);
+    */
 
 
 
+        // inline const static 
 
+        std::map<std::wstring, token_type> lexer_operator_list =
+        {
+            { L"+",      t_add },
+            { L"-",      t_sub },
+            { L"*",      t_mul },
+            { L"/",      t_div },
+            { L"=",   t_assign },
 
-        
-void lexer(i18nString Text) {
-    m_str = Text;
-    
-    while (m_idx < Text.length()) {
+            { L"(",     t_left_round_brackets },
+            { L")",    t_right_round_brackets },
+            { L"[",    t_left_square_brackets },
+            { L"]",   t_right_square_brackets },
+            { L"{",     t_left_curly_brackets },
+            { L"}",    t_right_curly_brackets },
+        };
 
-        scan_ch = Text[m_idx];
-        int e = 0;
-        if(scan_ch == L'\n')
+        std::map<std::wstring, token_type> key_word_list = 
         {
-            row++;
-            // col = 1;
-            next();
-        }
-        else if (scan_ch == L' ')
-        {
-            next();
-        }
-        else if (scan_ch == L'/')
-        {
-            scan_annotation();
-        }
-        else if (isDigit(scan_ch))
-        {
-            wcout << L"{ " << scan_ch << L" : integer" << L" }"<< endl;
-            next();
-        }
-        else if (scan_ch == L'+' || scan_ch == L'-'|| scan_ch == L'*'|| scan_ch == L'/')
-        {
-            wcout << L"{ " << scan_ch << L" }"<< endl;
-            next();
-        }
-        else if (scan_ch == L'\"')
-        {
-            wcout << L"{ " << scan_string() << L" : string" << L" }"<< endl;
-            next();
-        }
-        else if (scan_ch == L'.')
-        {
-            wcout << L"{ " << scan_ch << L" }"<< endl;
-            next();
-        }
-        else if (scan_ch == L'<')
-        {
-            wcout << L"{ " << scan_ch << L" }"<< endl;
-            next();
-        }
-        else if (scan_ch == L'>')
-        {
-            wcout << L"{ " << scan_ch << L" }"<< endl;
-            next();
-        }
-        else if (scan_ch == L'=')
-        {
-            wcout << L"{ " << scan_ch << L" }"<< endl;
-            next();
-        }
-        else if (scan_ch == L',')
-        {
-            wcout << L"{ " << scan_ch << L" }"<< endl;
-            next();
-        }
-        else if (scan_ch == L';')
-        {
-            wcout << L"{ " << scan_ch << L" }"<< endl;
-            next();
-        }
-        else if (scan_ch == L'~')
-        {
-            next();
-        }
-        else if (isAlpha(scan_ch) || scan_ch == L'_')
-        {
-            wcout << L"{ " << scan_identifier() << L" : identifier" << L" }"<< endl;
-            next();
-        }
-        else if (scan_ch == L'(')
-        {
-            wcout << L"{ " << scan_ch << L" }"<< endl;
-            next();
-        }
-        else if ( scan_ch == L')')
-        {
-            wcout << L"{ " << scan_ch << L" }"<< endl;
-            next();
-        }
-        else if (scan_ch == L'[')
-        {
-            wcout << L"{ " << scan_ch << L" }"<< endl;
-            next();
-        }
-        else if ( scan_ch == L']')
-        {
-            wcout << L"{ " << scan_ch << L" }"<< endl;
-            next();
-        }
-        else if (scan_ch == L'{' )
-        {
-            wcout << L"{ " << scan_ch << L" }"<< endl;
-            next();
-        }
-        else if (scan_ch == L'}')
-        {
-            wcout << L"{ " << scan_ch << L" }"<< endl;
-            next();
-        }
-        else
-        {
-            next();
-        }
-        
-        
-        
-        
-
+            { L"module",    t_module },       
+            { L"static",    t_static },       
+            { L"class",      t_class },   
+            { L"func",        t_func },   
+            { L"int",          t_int },   
+            { L"string",    t_string },     
+            { L"var",          t_var },  
+            { L"return",    t_return },       
+            { L"bool",        t_bool },   
+            { L"true",        t_true },   
+            { L"false",      t_false },       
+            { L"null",        t_null },   
+            { L"if",            t_if },   
+            { L"elif",        t_elif },   
+            { L"else",        t_else },   
+            { L"for",          t_for },   
+            { L"while",      t_while },       
+            { L"break",      t_break },  
+        };
         
 
 
 
-        /*
 
 
-        
+            
+    Lexer::Lexer(std::wstring str) {
+        m_str = str;
+        m_idx = 0;
 
-        if (isAlpha(ch)) {
-            while (isAlpha(ch)) {
-                token += ch;
-                stlPos++;
-                ch = Text[stlPos];
+        while (m_idx < str.length()) {
+
+            scan_ch = str[m_idx];
+            int e = 0;
+            if(scan_ch == L'\n')
+            {
+                row++;
+                // col = 1;
+                next();
             }
-            if (isKeyWord(token)) {
-                wcout << token << " <ID>" << endl;
-                // wcout << token << " <identifier>" << endl;
-                token = L"";
-            } else {
-                wcout << token << " <name>" << endl;
-                token = L"";
+            else if (scan_ch == L' ')
+            {
+                next();
             }
-        }
+            else if (scan_ch == L'/')
+            {
+                scan_annotation();
+            }
+            else if (isDigit(scan_ch))
+            {
+                wcout << L"{ " << scan_ch << L" : integer" << L" }"<< endl;
+                next();
+            }
+            else if (scan_ch == L'+' || scan_ch == L'-'|| scan_ch == L'*'|| scan_ch == L'/')
+            {
+                wcout << L"{ " << scan_ch << L" }"<< endl;
+                next();
+            }
+            else if (scan_ch == L'\"')
+            {
+                wcout << L"{ " << scan_string() << L" : string" << L" }"<< endl;
+                next();
+            }
+            else if (scan_ch == L'.')
+            {
+                wcout << L"{ " << scan_ch << L" }"<< endl;
+                next();
+            }
+            else if (scan_ch == L'<')
+            {
+                wcout << L"{ " << scan_ch << L" }"<< endl;
+                next();
+            }
+            else if (scan_ch == L'>')
+            {
+                wcout << L"{ " << scan_ch << L" }"<< endl;
+                next();
+            }
+            else if (scan_ch == L'=')
+            {
+                wcout << L"{ " << scan_ch << L" }"<< endl;
+                next();
+            }
+            else if (scan_ch == L',')
+            {
+                wcout << L"{ " << scan_ch << L" }"<< endl;
+                next();
+            }
+            else if (scan_ch == L';')
+            {
+                wcout << L"{ " << scan_ch << L" }"<< endl;
+                next();
+            }
+            else if (scan_ch == L'~')
+            {
+                next();
+            }
+            else if (isAlpha(scan_ch) || scan_ch == L'_')
+            {
+                wcout << L"{ " << scan_identifier() << L" : identifier" << L" }"<< endl;
+                next();
+            }
+            else if (scan_ch == L'(')
+            {
+                wcout << L"{ " << scan_ch << L" }"<< endl;
+                next();
+            }
+            else if ( scan_ch == L')')
+            {
+                wcout << L"{ " << scan_ch << L" }"<< endl;
+                next();
+            }
+            else if (scan_ch == L'[')
+            {
+                wcout << L"{ " << scan_ch << L" }"<< endl;
+                next();
+            }
+            else if ( scan_ch == L']')
+            {
+                wcout << L"{ " << scan_ch << L" }"<< endl;
+                next();
+            }
+            else if (scan_ch == L'{' )
+            {
+                wcout << L"{ " << scan_ch << L" }"<< endl;
+                next();
+            }
+            else if (scan_ch == L'}')
+            {
+                wcout << L"{ " << scan_ch << L" }"<< endl;
+                next();
+            }
+            else
+            {
+                next();
+            }
+            
+            
+            
+            
 
-        else if (ch == L'/') {
-            stlPos++;
-            ch = Text[stlPos];
-            if (ch == L'/') {
-                stlPos++;
-                ch = Text[stlPos];
-                while (ch != 0 && ch != L'\n') {
+            
+
+
+
+            /*
+
+
+            
+
+            if (isAlpha(ch)) {
+                while (isAlpha(ch)) {
                     token += ch;
                     stlPos++;
                     ch = Text[stlPos];
                 }
-               // wcout << token << L" <注释>" << endl;
+                if (isKeyWord(token)) {
+                    wcout << token << " <ID>" << endl;
+                    // wcout << token << " <identifier>" << endl;
+                    token = L"";
+                } else {
+                    wcout << token << " <name>" << endl;
+                    token = L"";
+                }
+            }
+
+            else if (ch == L'/') {
+                stlPos++;
+                ch = Text[stlPos];
+                if (ch == L'/') {
+                    stlPos++;
+                    ch = Text[stlPos];
+                    while (ch != 0 && ch != L'\n') {
+                        token += ch;
+                        stlPos++;
+                        ch = Text[stlPos];
+                    }
+                // wcout << token << L" <注释>" << endl;
+                    token = L"";
+                }
+            }
+
+
+            else if (ch == L'\"') {
+                stlPos++;
+                ch = Text[stlPos];
+                while (ch != 0 && ch != L'\"') {
+                    token += ch;
+                    stlPos++;
+                    ch = Text[stlPos];
+                }
+                wcout << token << L" <string>" << endl;
+                token = L"";
+                stlPos++;
+            }
+
+
+            else if (isDigit(ch)) {
+                while (isDigit(ch) || (ch == L'.')) {
+                    token += ch;
+                    stlPos++;
+                    ch = Text[stlPos];
+                }
+                wcout << token << L" <int>" << endl;
                 token = L"";
             }
-        }
 
-
-        else if (ch == L'\"') {
-            stlPos++;
-            ch = Text[stlPos];
-            while (ch != 0 && ch != L'\"') {
-                token += ch;
+            else if (ch == L'\'') {
                 stlPos++;
                 ch = Text[stlPos];
-            }
-            wcout << token << L" <string>" << endl;
-            token = L"";
-            stlPos++;
-        }
-
-
-        else if (isDigit(ch)) {
-            while (isDigit(ch) || (ch == L'.')) {
-                token += ch;
+                while (ch != 0 && ch != L'\'') {
+                    token += ch;
+                    stlPos++;
+                    ch = Text[stlPos];
+                }
+                wcout << token << L" <char>" << endl;
+                token = L"";
                 stlPos++;
-                ch = Text[stlPos];
             }
-            wcout << token << L" <int>" << endl;
-            token = L"";
+
+            */
+
+
+
+
+        // else {
+        //     // wcout << ch;
+        //     m_idx++;
+        //     col++;
+        // }
+            
+            // wcout << "\""<< ch << "\"" << L" m_idx: " << m_idx << endl;
         }
-
-        else if (ch == L'\'') {
-            stlPos++;
-            ch = Text[stlPos];
-            while (ch != 0 && ch != L'\'') {
-                token += ch;
-                stlPos++;
-                ch = Text[stlPos];
-            }
-            wcout << token << L" <char>" << endl;
-            token = L"";
-            stlPos++;
-        }
-
-        */
-
-
-
-
-       // else {
-       //     // wcout << ch;
-       //     m_idx++;
-       //     col++;
-       // }
-        
-        // wcout << "\""<< ch << "\"" << L" m_idx: " << m_idx << endl;
     }
-}
 
 
 
 
 
+
+};
 
 
 

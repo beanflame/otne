@@ -16,11 +16,12 @@ int main(int argc, char *argv[])
 
     // i18nString source = OtneReadFile("main.otne");
 
-    i18nString source = OtneReadFile("resources/code/HelloWorld.otne");
+    std::wstring source = OtneReadFile("resources/code/HelloWorld.otne");
     // i18nString source = OtneReadFile("resources/code/main.otne");
     wcout << source << endl;
     wcout << L"----------------------------------" << endl;
-    lexer(source);
+    otne::Lexer lex(source);
+    // lexer(source);
     return 0;
 }
 
@@ -30,11 +31,7 @@ int main(int argc, char *argv[])
 for (int i = 0; i < argc ; i++) {
     if (i != 0) { command_func_line(argv[i]); }
 }
-*/
 
-
-
-/*
 void command_func_line(string str)
 {
     if (str == "-help" || str == "-?")

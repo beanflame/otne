@@ -5,7 +5,7 @@
 #include <string>
 using namespace std;
 
-typedef wstring i18nString;
-typedef wchar_t i18nChar;
+// typedef wstring i18nString;
+// typedef wchar_t i18nChar;
 
 // #endif

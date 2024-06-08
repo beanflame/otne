@@ -6,10 +6,10 @@
 
 using namespace std;
 
-i18nString OtneReadFile(string filename)
+std::wstring OtneReadFile(string filename)
 {
-    i18nChar text[4096];
-    i18nString content;
+    wchar_t str[4096];
+    std::wstring content;
     FILE *file;
     file = fopen(filename.c_str(), "rt+,ccs=UTF-8");
     if (file == NULL)
@@ -17,9 +17,9 @@ i18nString OtneReadFile(string filename)
         std::wstring utf16String(filename.begin(), filename.end());
         return utf16String + L" " +L"File Open Error!";
     }
-    while (fgetws(text, 4096, file))
+    while (fgetws(str, 4096, file))
     {
-        content += wstring(text);
+        content += wstring(str);
     }
     fclose(file);
     return content;

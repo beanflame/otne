@@ -7,8 +7,8 @@
 #include <codecvt>
 #include "otne_utf8.hpp"
 
-using namespace std;
 
-i18nString OtneReadFile(string filename);
+
+std::wstring OtneReadFile(std::string filename);
 
 // #endif
