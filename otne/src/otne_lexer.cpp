@@ -67,7 +67,7 @@ namespace otne
         { L"while",      t_while },       
         { L"break",      t_break },  
     };
-
+    /*
     token_type qweqwe(const std::wstring& str) {
         auto it = lexer_operator_list.find(str);
         if (it != lexer_operator_list.end()) {
@@ -76,6 +76,7 @@ namespace otne
             return t_null;
         }
     }
+    */
 
     /*
     token Lexer::lexer_is_operate_type(wchar_t ch)
@@ -94,6 +95,7 @@ namespace otne
     }
     */
     
+    /*
     int isKeyWord(std::wstring t)
     {
         for (auto [op_str, op_type] : lexer_operator_list)
@@ -106,7 +108,7 @@ namespace otne
         }
         return false;
     }
-
+    */
 
     // ok
     void Lexer::next() {

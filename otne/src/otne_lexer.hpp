@@ -91,18 +91,20 @@ namespace otne
         public:
             Lexer(std::wstring str);
             
+            // next
             // wchar_t Lexer::next_ch()
             wchar_t next_ch();
             void next();
             // scan_ch
             // char scan_next_ch();
             // void scan_next();
-            void scan_annotation();
+            void scan_annotation();     // 注释
+            
 
+            // scan
             std::wstring scan_identifier();
             std::wstring scan_integer();
             std::wstring scan_string();
             std::wstring scan_float();
-
     };
 };
