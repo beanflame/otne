@@ -1,7 +1,4 @@
-
-
-
-
-opalr >
-    e : e;
-~$
+﻿func main ()
+{
+    printf("Hello");
+}

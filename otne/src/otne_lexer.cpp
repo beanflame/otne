@@ -34,6 +34,9 @@ namespace otne
         { L"*",      t_mul },
         { L"/",      t_div },
         { L"=",   t_assign },
+
+        { L";",   t_null },
+
         // { L"~",     t_tilde },
         { L"(",     t_left_round_brackets },
         { L")",    t_right_round_brackets },
@@ -101,11 +104,11 @@ namespace otne
 
     void Lexer::next() { 
         m_idx++;    // m_index
-        col++;
     }
 
     wchar_t Lexer::next_ch() {
         if (m_idx >= m_str.length()) {
+            
             return '\0';
         }
         return m_str[m_idx];
@@ -122,6 +125,7 @@ namespace otne
             next();
         }
         next();
+        m_idx--;
         return str;
     }
 
@@ -186,13 +190,17 @@ namespace otne
         m_str = str;
         m_idx = 0;
 
-        while (m_idx < str.length()) {
+        row = 1;
+        col = 1;
 
+        while (m_idx < str.length()) {
+            col++;
+            // next();
             scan_ch = str[m_idx];
             if(scan_ch == L'\n')
             {
+                col=0;
                 row++;
-                col = 0;
                 next();
             }
             else if (scan_ch == L' ')
@@ -208,99 +216,60 @@ namespace otne
                 std::wcout << L"{ " << scan_ch << L" : integer" << L" }"<< std::endl;
                 next();
             }
-            else if (scan_ch == L'+' || scan_ch == L'-'|| scan_ch == L'*'|| scan_ch == L'/')
-            {
-                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
-                next();
-            }
             else if (scan_ch == L'\"')
             {
                 std::wcout << L"{ " << scan_string() << L" : string" << L" }"<< std::endl;
                 next();
             }
-            else if (scan_ch == L'.')
-            {
-                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
-                next();
-            }
-            else if (scan_ch == L'<')
-            {
-                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
-                next();
-            }
-            else if (scan_ch == L'>')
-            {
-                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
-                next();
-            }
-            else if (scan_ch == L'=')
-            {
-                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
-                next();
-            }
-            else if (scan_ch == L',')
-            {
-                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
-                next();
-            }
-            else if (scan_ch == L':')
-            {
-                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
-                next();
-            }
-            else if (scan_ch == L';')
-            {
-                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
-                next();
-            }
-            else if (scan_ch == L'~')
-            {
-                next();
-            }
             else if (isAlpha(scan_ch) || scan_ch == L'_')
             {
-                std::wcout << L"{ " << scan_identifier() << L" : identifier" << L" }"<< std::endl;
-                next();
-            }
-            else if (scan_ch == L'(')
-            {
-                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
-                next();
-            }
-            else if ( scan_ch == L')')
-            {
-                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
-                next();
-            }
-            else if (scan_ch == L'[')
-            {
-                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
-                next();
-            }
-            else if ( scan_ch == L']')
-            {
-                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
-                next();
-            }
-            else if (scan_ch == L'{' )
-            {
-                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
-                next();
-            }
-            else if (scan_ch == L'}')
-            {
-                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
+                std::wcout << L"{ " << scan_identifier() << L" : identifier" << L" } " << row << L":" << col << std::endl;
                 next();
             }
             else
             {
-                std::wcerr << row << L":" << col << L" " << scan_ch << L" Error: Invalid Character" << std::endl;
+                std::wstring estr_;
+                std::wstring str_;
+                str_.push_back(scan_ch);
+                for (auto [op_str, op_type] : lexer_operator_list)
+                {
+                    if(op_str == str_)
+                    {
+                        estr_ = str_;
+                    }
+                }
+                if (estr_ == str_)
+                {
+                    std::wcout << L"{ " << str_ << L" }"<< std::endl;
+                }else if (estr_ != str_)
+                {
+                    std::wcerr << L"{ " << scan_ch << L" } " << row << L":" << col << L" " << L" Error: Invalid Character" << std::endl;
+                }
+                next();
+            }
+
+            
+
+
+
+
+
+            /*
+            
+            
+            
+          
+            
+            
+            else
+            {
+                
                 next();
             }
             
             
-            
-            
+          
+            */
 
             
 

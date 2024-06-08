@@ -74,9 +74,9 @@ namespace otne
     {
         private:
             std::wstring m_str;
-            int m_idx;      // m_index表示指数
-            int row = 1;    // row表示行
-            int col = 0;    // col表示列
+            int m_idx;  // m_index表示指数
+            int row;    // row表示行
+            int col;    // col表示列
 
             wchar_t scan_ch;// scan_ch表示扫描的字符
             // wchar_t scan_next_ch;
