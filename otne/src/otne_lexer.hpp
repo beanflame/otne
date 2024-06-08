@@ -77,9 +77,12 @@ namespace otne
     {
         private:
             std::wstring m_str;
-            int m_idx;
+            int m_idx;      // m_index表示指数
+            int row = 1;    // row表示行
+            int col = 1;    // col表示列
 
-
+            wchar_t scan_ch;// scan_ch表示扫描的字符
+            // wchar_t scan_next_ch;
 
         public:
             Lexer();
@@ -91,7 +94,7 @@ namespace otne
             // wchar_t Lexer::next_ch()
             wchar_t next_ch();
             void next();
-
+            // scan_ch
             // char scan_next_ch();
             // void scan_next();
             void scan_annotation();

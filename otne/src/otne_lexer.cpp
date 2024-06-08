@@ -27,21 +27,6 @@ namespace otne
     template<class T>
     int getLength(T& arr) { return sizeof(arr) / sizeof(arr[0]); }
 
-
-    // key_word_list
-    /*
-    std::wstring KeyWord[] = {
-        L"module",
-        L"static", 
-        L"class",
-        L"func", L"int", L"string", 
-        L"return", 
-        L"bool", L"true", L"false", L"null", 
-        L"if", L"elif", L"else", L"for", L"while", L"break" 
-    };
-    */
-
-
     std::map<std::wstring, token_type> lexer_operator_list =
     {
         { L"+",      t_add },
@@ -49,7 +34,7 @@ namespace otne
         { L"*",      t_mul },
         { L"/",      t_div },
         { L"=",   t_assign },
-
+        // { L"~",     t_tilde },
         { L"(",     t_left_round_brackets },
         { L")",    t_right_round_brackets },
         { L"[",    t_left_square_brackets },
@@ -109,21 +94,17 @@ namespace otne
         }
         return false;
     }
-    
 
-    int m_idx = 0;  // index表示指数
-    // row表示行，col表示列，index表示指数
-    int row = 1;
-    int col = 1;
-    std::wstring m_str = L"";
-    std::wstring token = L"";
-    wchar_t scan_ch;
+
+
+    // std::wstring token = L"";
+    // wchar_t scan_ch;
 
 
     // scan
 
     void Lexer::next() { 
-        m_idx++;    // index
+        m_idx++;    // m_index
     }
 
     wchar_t Lexer::next_ch() {
@@ -204,11 +185,6 @@ namespace otne
 
         
 
-
-
-
-
-            
     Lexer::Lexer(std::wstring str) {
         m_str = str;
         m_idx = 0;

@@ -6,8 +6,7 @@
 #include <codecvt>
 
 // #include "otne_utf8.hpp"
-#include "otne_file.hpp"
-#include "otne_lexer.hpp"
+#include "otne.hpp"
 
 int main(int argc, char *argv[])
 {
