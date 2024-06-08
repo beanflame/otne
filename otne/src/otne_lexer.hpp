@@ -63,7 +63,7 @@ namespace otne
     {
         token_type type;
         std::wstring value;
-        
+        int line, row;   // line：行号，row：列号
         token() {}
         token(token_type t, std::wstring v) : type(t), value(v) {}
     };
@@ -75,9 +75,9 @@ namespace otne
         private:
             std::wstring m_str;
             int m_idx;  // m_index表示指数
-            int row;    // row表示行
-            int col;    // col表示列
+            int line, row;   // line：行号，row：列号
 
+            // int row, col;   // row表示行, col表示列
             wchar_t scan_ch;// scan_ch表示扫描的字符
             // wchar_t scan_next_ch;
 
@@ -90,7 +90,7 @@ namespace otne
 
         public:
             Lexer(std::wstring str);
-            
+
             // next
             // wchar_t Lexer::next_ch()
             wchar_t next_ch();
@@ -99,7 +99,6 @@ namespace otne
             // char scan_next_ch();
             // void scan_next();
             void scan_annotation();     // 注释
-            
 
             // scan
             std::wstring scan_identifier();

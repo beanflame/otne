@@ -37,6 +37,8 @@ namespace otne
 
         { L";",   t_null },
 
+        { L".",   t_null },
+
         // { L"~",     t_tilde },
         { L"(",     t_left_round_brackets },
         { L")",    t_right_round_brackets },
@@ -112,6 +114,7 @@ namespace otne
 
     // ok
     void Lexer::next() {
+        row++;
         this->m_idx++;
     }
 
@@ -132,8 +135,8 @@ namespace otne
             str += next_ch();
             next();
         }
-        next();
-        m_idx--;
+        // next();
+        // m_idx--;
         return str;
     }
 
@@ -209,21 +212,58 @@ namespace otne
 
             
 
-    Lexer::Lexer(std::wstring str) {
+    Lexer::Lexer(std::wstring str) 
+    {
         m_str = str;
         m_idx = 0;
-
-        row = 1;
-        col = 1;
+        line = 1, row = 1;
 
         while (m_idx < str.length()) {
-            col++;
-            // next();
+            scan_ch = str[m_idx];
+            if(scan_ch == L'\n')
+            {
+                std::wcout << L"跳过" << L" line:" << line << L" row:"<< row << std::endl;
+                next();
+                line++;
+                row=1;
+            }
+            else if (scan_ch == L' ' || scan_ch == L'\t')
+            {
+                std::wcout << L"跳过" << L" line:" << line << L" row:"<< row << std::endl;
+                /* code */
+                next();
+            }
+            else if (scan_ch == L'\"')
+            {
+                std::wcout << L"{ " << scan_string() << L" : string" << L" } " << L"line:" << line << L" row:"<< row << std::endl;
+                next();
+            }
+            else if (scan_ch == L'$')
+            {
+                /* code */
+                next();
+            }
+            else
+            {
+                std::wcout << scan_ch << L" line:" << line << L" row:"<< row << std::endl;
+                next();
+            }
+            
+            
+
+            
+            
+            
+            
+
+
+            /*
+            line++;
             scan_ch = str[m_idx];
             if(scan_ch == L'\n')
             {
                 next(); 
-                this->col++; 
+                this->line++; 
                 this->row=1;
             }
             else if (scan_ch == L' ' || scan_ch == L'\t')
@@ -263,121 +303,22 @@ namespace otne
                     std::wcerr << L"{ " << scan_ch << L" } " << row << L":" << col << L" " << L" Error: Invalid Character" << std::endl;
                 }
 
-                /*
-                std::wstring estr_;
                 
-                for (auto [op_str, op_type] : lexer_operator_list)
-                {
-                    if(op_str == str_)
-                    {
-                        estr_ = str_;
-                    }
-                }
-                if (estr_ == str_)
-                {
-                    std::wcout << L"{ " << str_ << L" } " << row << L":" << col << std::endl;
-                }else if (estr_ != str_)
-                {
-                    std::wcerr << L"{ " << scan_ch << L" } " << row << L":" << col << L" " << L" Error: Invalid Character" << std::endl;
-                }
-                */
                 next();
             }
 
-            
-
-
-
-
-
-
-            
-
-
-
-            /*
-            if (isAlpha(ch)) {
-                while (isAlpha(ch)) {
-                    token += ch;
-                    stlPos++;
-                    ch = Text[stlPos];
-                }
-                if (isKeyWord(token)) {
-                    wcout << token << " <ID>" << endl;
-                    // wcout << token << " <identifier>" << endl;
-                    token = L"";
-                } else {
-                    wcout << token << " <name>" << endl;
-                    token = L"";
-                }
-            }
-
-            else if (ch == L'/') {
-                stlPos++;
-                ch = Text[stlPos];
-                if (ch == L'/') {
-                    stlPos++;
-                    ch = Text[stlPos];
-                    while (ch != 0 && ch != L'\n') {
-                        token += ch;
-                        stlPos++;
-                        ch = Text[stlPos];
-                    }
-                // wcout << token << L" <注释>" << endl;
-                    token = L"";
-                }
-            }
-
-
-            else if (ch == L'\"') {
-                stlPos++;
-                ch = Text[stlPos];
-                while (ch != 0 && ch != L'\"') {
-                    token += ch;
-                    stlPos++;
-                    ch = Text[stlPos];
-                }
-                wcout << token << L" <string>" << endl;
-                token = L"";
-                stlPos++;
-            }
-
-
-            else if (isDigit(ch)) {
-                while (isDigit(ch) || (ch == L'.')) {
-                    token += ch;
-                    stlPos++;
-                    ch = Text[stlPos];
-                }
-                wcout << token << L" <int>" << endl;
-                token = L"";
-            }
-
-            else if (ch == L'\'') {
-                stlPos++;
-                ch = Text[stlPos];
-                while (ch != 0 && ch != L'\'') {
-                    token += ch;
-                    stlPos++;
-                    ch = Text[stlPos];
-                }
-                wcout << token << L" <char>" << endl;
-                token = L"";
-                stlPos++;
-            }
-
             */
+    
 
 
 
 
-        // else {
-        //     // wcout << ch;
-        //     m_idx++;
-        //     col++;
-        // }
-            
-            // wcout << "\""<< ch << "\"" << L" m_idx: " << m_idx << endl;
+
+
+
+
+
+      
         }
     }
 
