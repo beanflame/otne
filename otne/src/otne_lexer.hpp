@@ -1,10 +1,6 @@
 #pragma once
 
-// #ifndef _LEXER_H
-// #define _LEXER_H
-
-#include "otne_utf8.hpp"
-
+// #include "otne_utf8.hpp"
 
 void lexer(wstring str);
 
@@ -101,4 +97,3 @@ namespace otne
 
     };
 };
-// #endif
