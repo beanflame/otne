@@ -63,10 +63,7 @@ namespace otne
     {
         token_type type;
         std::wstring value;
-
-
-
-
+        
         token() {}
         token(token_type t, std::wstring v) : type(t), value(v) {}
     };
