@@ -1,18 +1,11 @@
+
+// otne Hello ~
+#include "otne_lexer.hpp"
+
 #include <iostream>
 #include <fstream>
 #include <codecvt>
-
-#include "otne_utf8.hpp"
-#include "otne_lexer.hpp"
-using namespace std;
-
-#include "otne_file.hpp"
-#include "otne_utf8.hpp"
-
-#include <iostream>
-#include <string>
 #include <locale>
-#include <codecvt>
 #include <map>
 
 
@@ -20,7 +13,7 @@ namespace otne
 {
     Lexer::Lexer(){}
     Lexer::~Lexer(){}
-    
+
     bool isDigit(wchar_t ch) {
         if (ch >= L'0' && ch <= L'9') { return true; }
         else { return false; }
@@ -35,7 +28,7 @@ namespace otne
     template<class T>
     int getLength(T& arr) { return sizeof(arr) / sizeof(arr[0]); }
 
-    wstring KeyWord[] = {
+    std::wstring KeyWord[] = {
         L"module",
         L"static", 
         L"class",
@@ -47,7 +40,7 @@ namespace otne
 
 
 
-    int isKeyWord(wstring token) {
+    int isKeyWord(std::wstring token) {
         for (int i = 0; i < getLength(KeyWord); i++) {
             if (token == KeyWord[i]) { 
                 return true; 
@@ -66,8 +59,8 @@ namespace otne
     int row = 1;
     int col = 1;
 
-    wstring m_str = L"";
-    wstring token = L"";
+    std::wstring m_str = L"";
+    std::wstring token = L"";
     wchar_t scan_ch;
 
 
@@ -224,47 +217,47 @@ namespace otne
             }
             else if (isDigit(scan_ch))
             {
-                wcout << L"{ " << scan_ch << L" : integer" << L" }"<< endl;
+                std::wcout << L"{ " << scan_ch << L" : integer" << L" }"<< std::endl;
                 next();
             }
             else if (scan_ch == L'+' || scan_ch == L'-'|| scan_ch == L'*'|| scan_ch == L'/')
             {
-                wcout << L"{ " << scan_ch << L" }"<< endl;
+                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
                 next();
             }
             else if (scan_ch == L'\"')
             {
-                wcout << L"{ " << scan_string() << L" : string" << L" }"<< endl;
+                std::wcout << L"{ " << scan_string() << L" : string" << L" }"<< std::endl;
                 next();
             }
             else if (scan_ch == L'.')
             {
-                wcout << L"{ " << scan_ch << L" }"<< endl;
+                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
                 next();
             }
             else if (scan_ch == L'<')
             {
-                wcout << L"{ " << scan_ch << L" }"<< endl;
+                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
                 next();
             }
             else if (scan_ch == L'>')
             {
-                wcout << L"{ " << scan_ch << L" }"<< endl;
+                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
                 next();
             }
             else if (scan_ch == L'=')
             {
-                wcout << L"{ " << scan_ch << L" }"<< endl;
+                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
                 next();
             }
             else if (scan_ch == L',')
             {
-                wcout << L"{ " << scan_ch << L" }"<< endl;
+                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
                 next();
             }
             else if (scan_ch == L';')
             {
-                wcout << L"{ " << scan_ch << L" }"<< endl;
+                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
                 next();
             }
             else if (scan_ch == L'~')
@@ -273,37 +266,37 @@ namespace otne
             }
             else if (isAlpha(scan_ch) || scan_ch == L'_')
             {
-                wcout << L"{ " << scan_identifier() << L" : identifier" << L" }"<< endl;
+                std::wcout << L"{ " << scan_identifier() << L" : identifier" << L" }"<< std::endl;
                 next();
             }
             else if (scan_ch == L'(')
             {
-                wcout << L"{ " << scan_ch << L" }"<< endl;
+                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
                 next();
             }
             else if ( scan_ch == L')')
             {
-                wcout << L"{ " << scan_ch << L" }"<< endl;
+                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
                 next();
             }
             else if (scan_ch == L'[')
             {
-                wcout << L"{ " << scan_ch << L" }"<< endl;
+                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
                 next();
             }
             else if ( scan_ch == L']')
             {
-                wcout << L"{ " << scan_ch << L" }"<< endl;
+                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
                 next();
             }
             else if (scan_ch == L'{' )
             {
-                wcout << L"{ " << scan_ch << L" }"<< endl;
+                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
                 next();
             }
             else if (scan_ch == L'}')
             {
-                wcout << L"{ " << scan_ch << L" }"<< endl;
+                std::wcout << L"{ " << scan_ch << L" }"<< std::endl;
                 next();
             }
             else

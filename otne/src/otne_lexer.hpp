@@ -1,8 +1,9 @@
 #pragma once
 
 // #include "otne_utf8.hpp"
+#include <string>
 
-void lexer(wstring str);
+// void lexer(std::wstring str);
 
 namespace otne
 {
