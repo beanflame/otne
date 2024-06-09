@@ -7,7 +7,7 @@
 #include <codecvt>
 #include <locale>
 #include <map>
-#include <iomanip>
+
 
 
 namespace otne
@@ -71,48 +71,7 @@ namespace otne
         { L"while",      t_while },
         { L"break",      t_break },
     };
-    /*
-    token_type qweqwe(const std::wstring& str) {
-        auto it = lexer_operator_list.find(str);
-        if (it != lexer_operator_list.end()) {
-            return it->second;
-        } else {
-            return t_null;
-        }
-    }
-    */
-
-    /*
-    token Lexer::lexer_is_operate_type(wchar_t ch)
-    {
-        next();
-        std::string str;
-        str.push_back(ch);
-        for (auto [op_str, op_type] : lexer_operator_list)
-        {
-            if (op_str == str)
-            {
-                return token(op_type, str);
-            }
-        }
-        return token();
-    }
-    */
-    
-    /*
-    int isKeyWord(std::wstring t)
-    {
-        for (auto [op_str, op_type] : lexer_operator_list)
-        {
-            if (op_str == t)
-            {
-                // return token(op_type, t);
-                return true;
-            }
-        }
-        return false;
-    }
-    */
+ 
 
     // ok
     void Lexer::next() {
@@ -140,8 +99,7 @@ namespace otne
         return str;
     }
 
-    std::wstring Lexer::scan_integer()
-    {
+    std::wstring Lexer::scan_integer() {
         std::wstring str = L"";
         while (
             isDigit(next_ch())
@@ -155,7 +113,6 @@ namespace otne
     }
 
     std::wstring Lexer::scan_identifier() {
-
         std::wstring str = L"";
         while (
             isAlpha(next_ch()) || 
@@ -244,11 +201,11 @@ namespace otne
                 auto it = key_word_list.find(str_);
                 if (it != key_word_list.end())
                 {
-                    std::wcout << L"{ " << str_ << L" : key_word } "  << "\ttoken:" << std::setw(4) << it->second << L" line:" << line << L" row:"<< row << std::endl;
+                    std::wcout << L"{ " << str_ << L" : key_word } "  << "token:"  << it->second << L" line:" << line << L" row:"<< row << std::endl;
                 }
                 else
                 {
-                    std::wcout << L"{ " << str_ << L" : identifier" << L" } "  << "\ttoken:"<< "null" << L" line:" << line << L" row:"<< row << std::endl;
+                    std::wcout << L"{ " << str_ << L" : identifier" << L" } "  << "token:"<< "null" << L" line:" << line << L" row:"<< row << std::endl;
                 }
                 next();
             }
@@ -268,7 +225,7 @@ namespace otne
                 if (it != lexer_operator_list.end())
                 {
                     // return it->second;
-                    std::wcout << L"{ " << str_ << L" } " << "\t\t\ttoken:" << std::setw(4) << it->second << L" line:" << line << L" row:"<< row << std::endl;
+                    std::wcout << L"{ " << str_ << L" } " << "token:" << it->second << L" line:" << line << L" row:"<< row << std::endl;
                 }
                 else
                 {
@@ -278,27 +235,6 @@ namespace otne
                 }
                 next();
             }
-            
-            
-
-            
-            
-            
-            
-
-
-           
-    
-
-
-
-
-
-
-
-
-
-      
         }
     }
 
@@ -307,170 +243,10 @@ namespace otne
 
 
 
+
+
+
+
+    
+
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-ch = Text[stlPos];
-
-if (isText(ch)) {
-    while (isText(ch)) {
-        token += ch;
-        stlPos++;
-        ch = Text[stlPos];
-    }
-    if (isKeyWord(token)) {
-        wcout << token;
-        token = L"";
-    }
-    else {
-        wcout << token;
-        token = L"";
-    }
-}
-else {
-    wcout << ch;
-    stlPos++;
-}
-*/
-
-
-
-
-/*
-else if (isNum(ch)) {
-    while (isNum(ch) || (ch == L'.')) {
-        token += ch;
-        stlPos++;
-        ch = Text[stlPos];
-    }
-    wcout << token;
-    token = L"";
-}
-
-else if (ch == L'(') {
-
-    token += ch;
-    stlPos++;
-    ch = Text[stlPos];
-
-    wcout << token;
-
-    token = L"";
-}
-else if (ch == L')') {
-
-    token += ch;
-    stlPos++;
-    ch = Text[stlPos];
-
-    wcout << token;
-    token = L"";
-}
-
-else if (ch == L'{') {
-
-    token += ch;
-    stlPos++;
-    ch = Text[stlPos];
-
-    wcout << token;
-    token = L"";
-}
-else if (ch == L'}') {
-
-    token += ch;
-    stlPos++;
-    ch = Text[stlPos];
-    wcout << token;
-    token = L"";
-}
-
-
-
-else if (ch == L'\"') {
-    bool s = 1;
-    token += ch;
-    while (s)
-    {
-        stlPos++;
-        ch = Text[stlPos];
-        token += ch;
-        if (ch == L'\"') { s = 0; }
-    }
-    wcout << token;
-    token = L"";
-    stlPos++;
-}
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-if (isZHchar(ch)) {
-    token += ch;
-    while (isZHchar(ch)) {
-        ch = Text[stlPos++];
-        //stlPos++;
-        token += ch;
-    }
-    if (isKey(token)) {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
-        wcout << token;
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-        token = L"";
-    }
-}
-else if (ch == L'\"') {
-    bool ol = 1;
-    token += ch;
-    while(ol)
-    {
-        ch = Text[stlPos++];
-        token += ch;
-        if (ch == L'\"') { ol = 0; }
-    }
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
-    wcout << token;
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-    token = L"";
-}
-else {
-    wcout << ch;
-    ch = Text[stlPos++];
-}
-*/
-
-
-
- 
