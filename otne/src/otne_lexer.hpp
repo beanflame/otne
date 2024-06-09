@@ -9,7 +9,8 @@ namespace otne
 {
     enum token_type
     {
-        t_null = 0,
+        t_eof = -1,
+        t_error = 0,
         // t_literal_handle,           //  0L 256L 0xFFL
 
         t_identifier,               // identifier.
@@ -20,11 +21,13 @@ namespace otne
 
         t_semicolon,                // ;
         t_comma,                    // ,
+        t_point,
+
         t_add,						// +
         t_sub,						// -
         t_mul,						// *
         t_div,						// /
-        t_mod,                      // % 
+        t_mod,                      // %
         t_assign,					// =
 
         t_left_round_brackets,    // (
@@ -35,7 +38,7 @@ namespace otne
         t_right_curly_brackets,   // }
 
 
-        
+        t_null,
         t_module,
         t_class,
         t_static,

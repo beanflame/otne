@@ -1,1 +1,4 @@
-﻿func main () {}
+﻿module stdio;
+func main () {
+    printf("Hello, World !");
+}

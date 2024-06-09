@@ -19,7 +19,6 @@ namespace otne
         if (ch >= L'0' && ch <= L'9') { return true; }
         else { return false; }
     }
-
     bool isAlpha(wchar_t ch) {
         if ((ch >= L'a' && ch <= L'z') || (ch >= L'A' && ch <= L'Z')) { return true; }
         else { return false; }
@@ -34,11 +33,13 @@ namespace otne
         { L"-",      t_sub },
         { L"*",      t_mul },
         { L"/",      t_div },
+        { L"%",      t_mod },
         { L"=",   t_assign },
 
-        { L";",   t_null },
+        { L";",   t_semicolon },
+        { L",",   t_comma },
 
-        { L".",   t_null },
+        { L".",   t_point },
 
         // { L"~",     t_tilde },
         { L"(",     t_left_round_brackets },
@@ -51,24 +52,24 @@ namespace otne
 
     std::map<std::wstring, token_type> key_word_list = 
     {
-        { L"module",    t_module },       
-        { L"static",    t_static },       
-        { L"class",      t_class },   
-        { L"func",        t_func },   
-        { L"int",          t_int },   
-        { L"string",    t_string },     
-        { L"var",          t_var },  
-        { L"return",    t_return },       
-        { L"bool",        t_bool },   
-        { L"true",        t_true },   
-        { L"false",      t_false },       
-        { L"null",        t_null },   
-        { L"if",            t_if },   
-        { L"elif",        t_elif },   
-        { L"else",        t_else },   
-        { L"for",          t_for },   
-        { L"while",      t_while },       
-        { L"break",      t_break },  
+        { L"module",    t_module },
+        { L"static",    t_static },
+        { L"class",      t_class },
+        { L"func",        t_func },
+        { L"int",          t_int },
+        { L"string",    t_string },
+        { L"var",          t_var },
+        { L"return",    t_return },
+        { L"bool",        t_bool },
+        { L"true",        t_true },
+        { L"false",      t_false },
+        { L"null",        t_null },
+        { L"if",            t_if },
+        { L"elif",        t_elif },
+        { L"else",        t_else },
+        { L"for",          t_for },
+        { L"while",      t_while },
+        { L"break",      t_break },
     };
     /*
     token_type qweqwe(const std::wstring& str) {
@@ -230,7 +231,6 @@ namespace otne
             else if (scan_ch == L' ' || scan_ch == L'\t')
             {
                 // std::wcout << L"空白回车跳过" << L" line:" << line << L" row:"<< row << std::endl;
-                /* code */
                 next();
             }
             else if (isDigit(scan_ch))
@@ -251,6 +251,10 @@ namespace otne
                     std::wcout << L"{ " << str_ << L" : identifier" << L" } "  << "\ttoken:"<< "null" << L" line:" << line << L" row:"<< row << std::endl;
                 }
                 next();
+            }
+            else if (scan_ch == L'/')
+            {
+                scan_annotation();
             }
             else if (scan_ch == L'\"')
             {
