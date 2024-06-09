@@ -77,8 +77,7 @@ namespace otne
     {
         private:
             std::wstring m_str;
-            int m_idx;  // m_index表示指数
-            int line, row;   // line：行号，row：列号
+            int m_idx, line, row;   // m_index表示指数, line表示行号, row表示列号
 
             // int row, col;   // row表示行, col表示列
             wchar_t scan_ch;// scan_ch表示扫描的字符
@@ -87,10 +86,7 @@ namespace otne
         public:
             Lexer();
             ~Lexer();
-
-
-           
-
+            
         public:
             Lexer(std::wstring str);
 
