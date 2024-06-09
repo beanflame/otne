@@ -7,6 +7,7 @@
 #include <codecvt>
 #include <locale>
 #include <map>
+#include <iomanip>
 
 
 namespace otne
@@ -135,8 +136,6 @@ namespace otne
             str += next_ch();
             next();
         }
-        // next();
-        // m_idx--;
         return str;
     }
 
@@ -149,11 +148,13 @@ namespace otne
             str += next_ch();
             next();
         }
+        row--;
         m_idx--;
         return str;
     }
 
     std::wstring Lexer::scan_identifier() {
+
         std::wstring str = L"";
         while (
             isAlpha(next_ch()) || 
@@ -163,6 +164,7 @@ namespace otne
             str += next_ch();
             next();
         }
+        row--;
         m_idx--;
         return str;
     }
@@ -222,15 +224,32 @@ namespace otne
             scan_ch = str[m_idx];
             if(scan_ch == L'\n')
             {
-                std::wcout << L"跳过" << L" line:" << line << L" row:"<< row << std::endl;
-                next();
-                line++;
-                row=1;
+                // std::wcout << L"换行跳过" << L" line:" << line << L" row:"<< row << std::endl;
+                next(); line++; row=1;
             }
             else if (scan_ch == L' ' || scan_ch == L'\t')
             {
-                std::wcout << L"跳过" << L" line:" << line << L" row:"<< row << std::endl;
+                // std::wcout << L"空白回车跳过" << L" line:" << line << L" row:"<< row << std::endl;
                 /* code */
+                next();
+            }
+            else if (isDigit(scan_ch))
+            {
+                std::wcout << L"{ " << scan_integer() << L" : integer" << L" } " << L"line:" << line << L" row:"<< row << std::endl;
+                next();
+            }
+            else if (isAlpha(scan_ch) || scan_ch == L'_')
+            {
+                std::wstring str_ = scan_identifier();
+                auto it = key_word_list.find(str_);
+                if (it != key_word_list.end())
+                {
+                    std::wcout << L"{ " << str_ << L" : key_word } "  << "\ttoken:" << std::setw(4) << it->second << L" line:" << line << L" row:"<< row << std::endl;
+                }
+                else
+                {
+                    std::wcout << L"{ " << str_ << L" : identifier" << L" } "  << "\ttoken:"<< "null" << L" line:" << line << L" row:"<< row << std::endl;
+                }
                 next();
             }
             else if (scan_ch == L'\"')
@@ -238,76 +257,33 @@ namespace otne
                 std::wcout << L"{ " << scan_string() << L" : string" << L" } " << L"line:" << line << L" row:"<< row << std::endl;
                 next();
             }
-            else if (scan_ch == L'$')
-            {
-                /* code */
-                next();
-            }
             else
             {
-                std::wcout << scan_ch << L" line:" << line << L" row:"<< row << std::endl;
-                next();
-            }
-            
-            
-
-            
-            
-            
-            
-
-
-            /*
-            line++;
-            scan_ch = str[m_idx];
-            if(scan_ch == L'\n')
-            {
-                next(); 
-                this->line++; 
-                this->row=1;
-            }
-            else if (scan_ch == L' ' || scan_ch == L'\t')
-            {
-                next();
-                this->row++;
-            }
-            else if (scan_ch == L'/')
-            {
-                scan_annotation();
-            }
-            else if (isDigit(scan_ch))
-            {
-                std::wcout << L"{ " << scan_integer() << L" : integer" << L" }"<< std::endl;
-                next();
-            }
-            else if (scan_ch == L'\"')
-            {
-                std::wcout << L"{ " << scan_string() << L" : string" << L" }"<< std::endl;
-                next();
-            }
-            else if (isAlpha(scan_ch) || scan_ch == L'_')
-            {
-                std::wcout << L"{ " << scan_identifier() << L" : identifier" << L" } " << std::endl;
-                next();
-            }
-            else
-            {
-                std::wstring str_;
-                str_.push_back(scan_ch);
+                std::wstring str_; str_.push_back(scan_ch);
                 auto it = lexer_operator_list.find(str_);
-                if (it != lexer_operator_list.end()) {
+                if (it != lexer_operator_list.end())
+                {
                     // return it->second;
-                    std::wcout << L"{ " << str_ << L" } " << row << L":" << col << std::endl;
-                } else {
-                    // return t_null;
-                    std::wcerr << L"{ " << scan_ch << L" } " << row << L":" << col << L" " << L" Error: Invalid Character" << std::endl;
+                    std::wcout << L"{ " << str_ << L" } " << "\t\t\ttoken:" << std::setw(4) << it->second << L" line:" << line << L" row:"<< row << std::endl;
                 }
-
-                
+                else
+                {
+                    std::wcout << L"{ " << scan_ch << L" } " << L"line:" << line << L" row:"<< row << L" Error: Invalid Character" << std::endl;
+                    // return t_null;
+                    // std::wcerr << L"{ " << scan_ch << L" } " << row << L":" << col << L" " << L" Error: Invalid Character" << std::endl;
+                }
                 next();
             }
+            
+            
 
-            */
+            
+            
+            
+            
+
+
+           
     
 
 
