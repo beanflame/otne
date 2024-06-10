@@ -168,16 +168,8 @@ namespace otne
     */
     // inline const static 
     
-
-
-            
-
-    Lexer::Lexer(std::wstring str) 
+    Lexer::Lexer(std::wstring str) : m_str(str),m_idx(0),line(1),row(1)
     {
-        m_str = str;
-        m_idx = 0;
-        line = 1, row = 1;
-
         while (m_idx < str.length()) {
             scan_ch = str[m_idx];
             if(scan_ch == L'\n')
@@ -225,11 +217,11 @@ namespace otne
                 if (it != lexer_operator_list.end())
                 {
                     // return it->second;
-                    std::wcout << L"{ " << str_ << L" } " << "token:" << it->second << L" line:" << line << L" row:"<< row << std::endl;
+                    std::wcout << L"{ " << str_ << L" } " << "token:" << it->second << L" line_row " << line << L":"<< row << std::endl;
                 }
                 else
                 {
-                    std::wcout << L"{ " << scan_ch << L" } " << L"line:" << line << L" row:"<< row << L" Error: Invalid Character" << std::endl;
+                    std::wcout << L"{ " << scan_ch << L" } " << L"line_row " << line << L":"<< row << L" Error: Invalid Character" << std::endl;
                     // return t_null;
                     // std::wcerr << L"{ " << scan_ch << L" } " << row << L":" << col << L" " << L" Error: Invalid Character" << std::endl;
                 }
@@ -247,6 +239,6 @@ namespace otne
 
 
 
-    
+
 
 };

@@ -6,6 +6,18 @@
 #include <codecvt>
 
 // #include "otne_utf8.hpp"
+
+/***
+ *              __             
+ *      ____   / /_ ____   ___ 
+ *     / __ \ / __// __ \ / _ \
+ *    / /_/ // /_ / / / //  __/
+ *    \____/ \__//_/ /_/ \___/ 
+ *                             
+ */               
+
+// https://patorjk.com/software/taag/#p=display&h=1&c=c&f=Slant&t=otne
+
 #include "otne.hpp"
 
 int main(int argc, char *argv[])
