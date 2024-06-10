@@ -1,5 +1,7 @@
 ﻿module stdio;
+
+// module otne.lr;
+
 func main () {
-    printf("Hello, World !");
+    printf("Hello");
 }
-#
