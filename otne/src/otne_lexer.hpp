@@ -14,16 +14,14 @@ namespace otne
         t_eof = -1,
         t_error = 0,
         // t_literal_handle,           //  0L 256L 0xFFL
-
+        
         t_identifier,               // identifier.
         t_literal_integer,          // 1 233 0x123456 0b1101001 032
         t_literal_real,             //  0.2  0.  .235
         t_literal_string,           //  "hello"
         t_literal_char,             // 'x'
 
-        t_semicolon,                // ;
-        t_comma,                    // ,
-        t_point,
+        
 
         t_add,						// +
         t_sub,						// -
@@ -32,6 +30,11 @@ namespace otne
         t_mod,                      // %
         t_assign,					// =
 
+        // 分隔符
+        t_semicolon,                // ;
+        t_comma,                    // ,
+        t_point,                    // ~
+        
         t_left_round_brackets,    // (
         t_right_round_brackets,   // )
         t_left_square_brackets,   // [
@@ -39,7 +42,7 @@ namespace otne
         t_left_curly_brackets,    // {
         t_right_curly_brackets,   // }
 
-
+        // 关键字
         t_null,
         t_module,
         t_class,

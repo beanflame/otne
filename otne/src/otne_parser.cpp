@@ -4,12 +4,12 @@
 
 namespace otne
 {
-    Parse::Parse(){}
-    Parse::~Parse(){}
+    Parser::Parser(){}
+    Parser::~Parser(){}
 
-    Parse::Parse(std::vector<token> tl):token_list(tl)
+    Parser::Parser(std::vector<token> tl):token_list(tl)
     {
-
+        
     }
     
 };

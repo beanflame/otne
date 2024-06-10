@@ -7,16 +7,16 @@
 
 namespace otne
 {
-    class Parse
+    class Parser
     {
         private:
             std::vector<token> token_list;
             
         public:
-            Parse();
-            ~Parse();
+            Parser();
+            ~Parser();
 
             // Parse token_list
-            Parse(std::vector<token> tl);
+            Parser(std::vector<token> tl);
     };
 };
