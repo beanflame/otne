@@ -15,10 +15,26 @@ namespace otne
     Lexer::Lexer(){}
     Lexer::~Lexer(){}
 
+    void Lexer::addToken(token t)
+    {
+        t.line = line;
+        t.row = row;
+        token_list.push_back(t);
+    }
+
+    void Lexer::ino()
+    {
+        for (auto &token : token_list)
+        {
+            std::wcout << L"Token { " << token.value << L" } "  << "token:"  << token.type << L" line:" << token.line << L" row:" << token.row << std::endl;
+        }
+    }
+
     bool isDigit(wchar_t ch) {
         if (ch >= L'0' && ch <= L'9') { return true; }
         else { return false; }
     }
+
     bool isAlpha(wchar_t ch) {
         if ((ch >= L'a' && ch <= L'z') || (ch >= L'A' && ch <= L'Z')) { return true; }
         else { return false; }
@@ -184,7 +200,8 @@ namespace otne
             }
             else if (isDigit(scan_ch))
             {
-                std::wcout << L"{ " << scan_integer() << L" : integer" << L" } " << L"line:" << line << L" row:"<< row << std::endl;
+                addToken(token(t_literal_integer, scan_integer()));
+                // std::wcout << L"{ " << scan_integer() << L" : integer" << L" } " << L"line:" << line << L" row:"<< row << std::endl;
                 next();
             }
             else if (isAlpha(scan_ch) || scan_ch == L'_')
@@ -193,11 +210,13 @@ namespace otne
                 auto it = key_word_list.find(str_);
                 if (it != key_word_list.end())
                 {
-                    std::wcout << L"{ " << str_ << L" : key_word } "  << "token:"  << it->second << L" line:" << line << L" row:"<< row << std::endl;
+                    addToken(token(it->second, str_));
+                    // std::wcout << L"{ " << str_ << L" : key_word } "  << "token:"  << it->second << L" line:" << line << L" row:"<< row << std::endl;
                 }
                 else
                 {
-                    std::wcout << L"{ " << str_ << L" : identifier" << L" } "  << "token:"<< "null" << L" line:" << line << L" row:"<< row << std::endl;
+                    addToken(token(t_identifier, str_));
+                    // std::wcout << L"{ " << str_ << L" : identifier" << L" } "  << "token:"<< "null" << L" line:" << line << L" row:"<< row << std::endl;
                 }
                 next();
             }
@@ -207,7 +226,8 @@ namespace otne
             }
             else if (scan_ch == L'\"')
             {
-                std::wcout << L"{ " << scan_string() << L" : string" << L" } " << L"line:" << line << L" row:"<< row << std::endl;
+                addToken(token(t_string, scan_string()));
+                // std::wcout << L"{ " << scan_string() << L" : string" << L" } " << L"line:" << line << L" row:"<< row << std::endl;
                 next();
             }
             else
@@ -217,11 +237,12 @@ namespace otne
                 if (it != lexer_operator_list.end())
                 {
                     // return it->second;
-                    std::wcout << L"{ " << str_ << L" } " << "token:" << it->second << L" line_row " << line << L":"<< row << std::endl;
+                    addToken(token(it->second, str_));
+                    // std::wcout << L"{ " << str_ << L" } " << "token:" << it->second << L" line_row " << line << L":"<< row << std::endl;
                 }
                 else
                 {
-                    std::wcout << L"{ " << scan_ch << L" } " << L"line_row " << line << L":"<< row << L" Error: Invalid Character" << std::endl;
+                    std::wcout << L"Lexer { " << scan_ch << L" } " << L"line_row " << line << L":"<< row << L" Error: Invalid Character" << std::endl;
                     // return t_null;
                     // std::wcerr << L"{ " << scan_ch << L" } " << row << L":" << col << L" " << L" Error: Invalid Character" << std::endl;
                 }

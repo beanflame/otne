@@ -2,6 +2,8 @@
 
 // #include "otne_utf8.hpp"
 #include <string>
+#include <map>
+#include <vector>
 
 // void lexer(std::wstring str);
 
@@ -83,6 +85,8 @@ namespace otne
             wchar_t scan_ch;// scan_ch表示扫描的字符
             // wchar_t scan_next_ch;
 
+            std::vector<token> token_list;
+
         public:
             Lexer();
             ~Lexer();
@@ -104,5 +108,10 @@ namespace otne
             std::wstring scan_integer();
             std::wstring scan_string();
             std::wstring scan_float();
+
+            // token
+            std::vector<token> getTokens();
+            void addToken(token t);
+            void ino();
     };
 };

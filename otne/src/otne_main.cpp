@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
     std::wcout << source << std::endl;
     std::wcout << L"----------------------------------" << std::endl;
     otne::Lexer lex(source);
+    lex.ino();
     return 0;
 }
 
